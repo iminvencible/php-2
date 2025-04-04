@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulário Moderno com PHP GET</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+    <style>
+        * {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding-top: 2rem; /* Add padding for better spacing on small screens */
+            padding-bottom: 2rem;
+        }
+
+        .form-container {
+            background: rgba(255, 255, 255, 0.95);
+            max-width: 700px;
+            margin: auto; /* Changed from '2rem auto' for better centering */
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .form-title {
+            color: #2a2a2a;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 2rem;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+
+        .form-title:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, #6c5ce7 0%, #a8a4e6 100%);
+            border-radius: 2px;
+        }
+
+        .form-label {
+            font-weight: 500;
+            color: #4a4a4a;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-control, .form-select { /* Apply styling to select too */
+            border-radius: 10px;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus, .form-select:focus { /* Apply focus styling to select too */
+            border-color: #6c5ce7;
+            box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.1);
+        }
+
+        .form-check-input:checked {
+            background-color: #6c5ce7;
+            border-color: #6c5ce7;
+        }
+
+        .btn-custom {
+            background: linear-gradient(135deg, #6c5ce7 0%, #a8a4e6 100%);
+            border: none;
+            color: white;
+            padding: 12px 0;
+            font-weight: 500;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            width: 100%; /* Make button full width */
+        }
+
+        .btn-custom:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(108, 92, 231, 0.3);
+            color: white; /* Ensure text remains white on hover */
+        }
+
+        .tech-section {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-top: 1.5rem; /* Adjusted margin */
+            margin-bottom: 1.5rem;
+        }
+
+        .form-check-label {
+            color: #5a5a5a;
+        }
+
+        @media (max-width: 768px) {
+            .form-container {
+                margin: 1rem;
+                padding: 1.5rem;
+            }
+            body {
+                align-items: flex-start; /* Align form to top on small screens */
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- The main form tag with action and method -->
+        <!-- action="process.php" specifies the PHP file that will handle the data -->
+        <!-- method="get" means data will be sent via the URL -->
+        <form action="process.php" method="get" class="form-container shadow-lg">
+            <h2 class="form-title">Cadastro de Desenvolvedor</h2>
+
+            <div class="row g-4">
+
+                <div class="col-md-6">
+                    <div class="mb-3"> <!-- Reduced bottom margin slightly -->
+                        <label for="nome" class="form-label">Nome completo</label>
+                        <!-- Added name="nome" -->
+                        <input type="text" class="form-control" name="nome" id="nome" placeholder="Digite seu Nome" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="email" class="form-label">E-mail</label>
+                        <!-- Added name="email" -->
+                        <input type="email" class="form-control" name="email" id="email" placeholder="joao@exemplo.com" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="nascimento" class="form-label">Data de nascimento</label>
+                        <!-- Added name="nascimento" -->
+                        <input type="date" class="form-control" name="nascimento" id="nascimento" required>
+                    </div>
+                </div>
+
+
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label for="idade" class="form-label">Idade</label>
+                        <!-- Added name="idade" -->
+                        <input type="number" class="form-control" name="idade" id="idade" min="0" placeholder="25" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="senha" class="form-label">Senha</label>
+                        <!-- Added name="senha" -->
+                        <!-- WARNING: Sending passwords via GET is insecure as it's visible in the URL/logs -->
+                        <input type="password" class="form-control" name="senha" id="senha" placeholder="••••••••" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="so" class="form-label">Sistema operacional</label>
+                        <!-- Added name="so" and value attributes to options -->
+                        <select class="form-select" name="so" id="so" required>
+                            <option value="" disabled selected>Selecione...</option> <!-- Added placeholder -->
+                            <option value="Windows">Windows</option>
+                            <option value="Linux">Linux</option>
+                            <option value="macOS">macOS</option>
+                            <option value="Outro">Outro</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="tech-section">
+                <label class="form-label mb-3">Tecnologias que domina</label>
+                <div class="row g-3">
+                    <!-- Added name="tecnologias[]" and value attributes to all checkboxes -->
+                    <div class="col-6 col-md-4">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="tecnologias[]" value="HTML" id="html">
+                            <label class="form-check-label" for="html">HTML</label>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-4">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="tecnologias[]" value="CSS" id="css">
+                            <label class="form-check-label" for="css">CSS</label>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-4">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="tecnologias[]" value="JavaScript" id="js">
+                            <label class="form-check-label" for="js">JavaScript</label>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-4">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="tecnologias[]" value="PHP" id="php">
+                            <label class="form-check-label" for="php">PHP</label>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-4">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="tecnologias[]" value="Python" id="python">
+                            <label class="form-check-label" for="python">Python</label>
+                        </div>
+                    </div>
+                     <div class="col-6 col-md-4">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="tecnologias[]" value="Outra" id="outra_tech">
+                            <label class="form-check-label" for="outra_tech">Outra</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <label class="form-label">Nível de Experiência (Ex: HTML)</label>
+                 <!-- Radio buttons already had the correct name attribute -->
+                 <!-- Added value attributes -->
+                <div class="d-flex flex-wrap gap-3"> <!-- Added flex-wrap for better responsiveness -->
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="experiencia" value="iniciante" id="iniciante" required> <!-- Added required -->
+                        <label class="form-check-label" for="iniciante">Iniciante</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="experiencia" value="intermediario" id="intermediario" required>
+                        <label class="form-check-label" for="intermediario">Intermediário</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="experiencia" value="avancado" id="avancado" required>
+                        <label class="form-check-label" for="avancado">Avançado</label>
+                    </div>
+                </div>
+            </div>
+
+
+            <button type="submit" class="btn btn-custom mt-3">
+                <i class="bi bi-send-check me-2"></i> Cadastrar
+            </button>
+        </form>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
